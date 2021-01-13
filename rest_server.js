@@ -34,8 +34,9 @@ app.get('/home', (req, res, next) => {
 })
 
 app.get('/patients', async (req, res, next) => {
+	const ipserver = process.env['IPSERVER'];
     let patients = await PatientController.list().catch(e => next(e));
-    res.render('index', {patients: patients, patientDeleted: req.query.patientDeleted});
+    res.render('index', {ipserver: ipserver, patients: patients, patientDeleted: req.query.patientDeleted});
 });
 app.post('/patients', async (req, res, next) => {
 	await PatientController.create(req.body).catch(e => next(e));
